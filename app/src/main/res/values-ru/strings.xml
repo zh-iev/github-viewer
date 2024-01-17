@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub Viewer</string>
+    <string name="navigation_drawer_open">Открыть навигационное меню</string>
+    <string name="navigation_drawer_close">Закрыть навигационное меню</string>
+    <string name="nav_header_title">Никнейм</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Хедер навигация</string>
+    <string name="action_settings">Настройки</string>
+    <string name="menu_home">Домашняя</string>
+    <string name="menu_gallery">Галерея</string>
+    <string name="menu_slideshow">Слайдшоу</string>
+</resources>
