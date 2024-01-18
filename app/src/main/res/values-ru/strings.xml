@@ -10,4 +10,6 @@
     <string name="menu_home">Домашняя</string>
     <string name="menu_gallery">Галерея</string>
     <string name="menu_slideshow">Слайдшоу</string>
+    <string name="login_with_github">Войти через GitHub</string>
+    <string name="update">Обновить</string>
 </resources>
