@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.userData.observe(this) {
-            Toast.makeText(this, "${getString(R.string.welcome)} ${it.name}!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${getString(R.string.welcome)} ${it.name ?: ""}!", Toast.LENGTH_SHORT).show()
             val navHeaderView = binding.navView.getHeaderView(0)
             val headerBinding = NavHeaderMainBinding.bind(navHeaderView)
             Glide.with(this)

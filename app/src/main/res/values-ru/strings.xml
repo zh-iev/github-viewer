@@ -13,4 +13,5 @@
     <string name="login_with_github">Войти через GitHub</string>
     <string name="update">Обновить</string>
     <string name="welcome">Добро пожаловать,</string>
+    <string name="login_success">Вход в аккаунт выполнен!</string>
 </resources>
