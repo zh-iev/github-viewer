@@ -1,7 +1,6 @@
-package ru.zhiev.githubviewer.data
+package ru.zhiev.githubviewer
 
 import android.content.Context
-import android.content.SharedPreferences
 
 class TokenManager(context: Context, private val fileName: String = "GitHubViewer") {
     private var preference = context.getSharedPreferences(fileName, PREF_MODE)
@@ -16,4 +15,8 @@ class TokenManager(context: Context, private val fileName: String = "GitHubViewe
         set(value) {
             preference.edit().putString(PREF_ACCESS_TOKEN, value).apply()
         }
+
+    fun clearAccessToken() {
+        preference.edit().remove(PREF_ACCESS_TOKEN).apply()
+    }
 }

@@ -1,4 +1,4 @@
-package ru.zhiev.githubviewer.presentation
+package ru.zhiev.githubviewer.presentation.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData

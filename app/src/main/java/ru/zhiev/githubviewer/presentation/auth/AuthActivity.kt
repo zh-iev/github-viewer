@@ -1,4 +1,4 @@
-package ru.zhiev.githubviewer.presentation
+package ru.zhiev.githubviewer.presentation.auth
 
 import android.content.Intent
 import android.net.Uri
@@ -14,10 +14,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import ru.zhiev.githubviewer.Constants
 import ru.zhiev.githubviewer.GitHubViewerApplication
-import ru.zhiev.githubviewer.data.TokenManager
+import ru.zhiev.githubviewer.TokenManager
 import ru.zhiev.githubviewer.databinding.ActivityAuthBinding
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
+import ru.zhiev.githubviewer.presentation.main.MainActivity
 
 class AuthActivity : AppCompatActivity() {
 
@@ -32,6 +33,12 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
         tokenManager = TokenManager(this)
 
+        if (!tokenManager.accessToken.isNullOrEmpty()) {
+            startMainActivity(tokenManager.accessToken!!)
+        } else {
+            setupWebView()
+        }
+
         appRepository = (applicationContext as GitHubViewerApplication).repository
         val workWithGitHubUseCase = WorkWithGitHubUseCase(appRepository)
         viewModel = ViewModelProvider(
@@ -39,6 +46,24 @@ class AuthActivity : AppCompatActivity() {
             AuthViewModelFactory(workWithGitHubUseCase)
         )[AuthViewModel::class.java]
 
+        viewModel.accessToken.observe(this) { token ->
+            if (token.accessToken.isNotEmpty()) {
+                startMainActivity(token.accessToken)
+                tokenManager.accessToken = token.accessToken
+            } else {
+                Toast.makeText(this, "Error: Empty access token", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun startMainActivity(accessToken: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(MainActivity.ACCESS_TOKEN, accessToken)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    private fun setupWebView() {
         val webView: WebView = binding.webView
 
         webView.webViewClient = object : WebViewClient() {
@@ -56,7 +81,7 @@ class AuthActivity : AppCompatActivity() {
             RelativeLayout.LayoutParams.MATCH_PARENT
         )
 
-        binding.loginButton.setOnClickListener { view ->
+        binding.loginButton.setOnClickListener {
             binding.loginButton.visibility = View.GONE
             binding.progressBar.isVisible = true
             webView.loadUrl(
@@ -85,14 +110,6 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         }
-
-        viewModel.accessToken.observe(this) { token ->
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(MainActivity.ACCESS_TOKEN, token.accessToken)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            tokenManager.accessToken = token.accessToken
-        }
     }
 
     private fun handleUrl(url: String) {
@@ -103,7 +120,7 @@ class AuthActivity : AppCompatActivity() {
             viewModel.getAccessToken(githubCode)
             Toast.makeText(this, "Login success!", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: no code", Toast.LENGTH_SHORT).show()
         }
     }
 }
