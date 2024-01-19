@@ -7,9 +7,9 @@ import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import ru.zhiev.githubviewer.Constants
-import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
-import ru.zhiev.githubviewer.domain.models.TokenModel
-import ru.zhiev.githubviewer.domain.models.UserModel
+import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
+import ru.zhiev.githubviewer.data.apimodels.TokenApiModel
+import ru.zhiev.githubviewer.data.apimodels.UserApiModel
 
 interface GitHubAPIService {
 
@@ -20,18 +20,18 @@ interface GitHubAPIService {
         @Field("client_id") clientId: String,
         @Field("client_secret") clientSecret: String,
         @Field("code") code: String,
-    ) : TokenModel
+    ) : TokenApiModel
 
     @Headers("Accept: application/json")
     @GET("user")
     suspend fun getUserData(
         @Header("authorization") token: String
-    ): UserModel
+    ): UserApiModel
 
     @Headers("Accept: application/json")
     @GET("user/repos")
     suspend fun getRepositories(
         @Header("authorization") token: String
-    ): List<GitHubRepositoryModel>
+    ): List<GitHubRepositoryApiModel>
 }
 
