@@ -15,6 +15,8 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import ru.zhiev.githubviewer.GitHubViewerApplication
 import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.databinding.ActivityMainBinding
@@ -22,6 +24,7 @@ import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
 import ru.zhiev.githubviewer.presentation.auth.AuthActivity
 import ru.zhiev.githubviewer.TokenManager
+import ru.zhiev.githubviewer.databinding.NavHeaderMainBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,7 +60,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.userData.observe(this) {
-            Toast.makeText(this, "Welcome ${it.name}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${getString(R.string.welcome)} ${it.name}!", Toast.LENGTH_SHORT).show()
+            val navHeaderView = binding.navView.getHeaderView(0)
+            val headerBinding = NavHeaderMainBinding.bind(navHeaderView)
+            Glide.with(this)
+                .load(it.avatarUrl)
+                .apply(RequestOptions().circleCrop())
+                .into(headerBinding.userIcon)
+            headerBinding.nickname.text = it.name
+            headerBinding.login.text = it.login
         }
 
         binding.appBarMain.fab.setOnClickListener { view ->
