@@ -6,8 +6,11 @@
     <string name="nav_header_title">Никнейм</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Хедер навигация</string>
-    <string name="action_settings">Настройки</string>
+    <string name="action_logout">Выйти из аккаунта</string>
     <string name="menu_home">Домашняя</string>
     <string name="menu_gallery">Галерея</string>
     <string name="menu_slideshow">Слайдшоу</string>
+    <string name="login_with_github">Войти через GitHub</string>
+    <string name="update">Обновить</string>
+    <string name="welcome">Добро пожаловать,</string>
 </resources>
