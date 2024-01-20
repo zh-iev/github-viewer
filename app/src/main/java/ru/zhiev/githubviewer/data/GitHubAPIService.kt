@@ -6,8 +6,10 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 import ru.zhiev.githubviewer.Constants
 import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
+import ru.zhiev.githubviewer.data.apimodels.RepositorySearchApiModel
 import ru.zhiev.githubviewer.data.apimodels.TokenApiModel
 import ru.zhiev.githubviewer.data.apimodels.UserApiModel
 
@@ -33,5 +35,12 @@ interface GitHubAPIService {
     suspend fun getRepositories(
         @Header("authorization") token: String
     ): List<GitHubRepositoryApiModel>
+
+    @Headers("Accept: application/json")
+    @GET("search/repositories")
+    suspend fun searchRepositories(
+        @Header("Authorization") token: String,
+        @Query("q") query: String
+    ): RepositorySearchApiModel
 }
 

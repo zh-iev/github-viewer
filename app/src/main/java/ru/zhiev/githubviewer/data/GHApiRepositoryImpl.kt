@@ -3,6 +3,7 @@ package ru.zhiev.githubviewer.data
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
 import ru.zhiev.githubviewer.domain.models.OwnerModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
+import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
 import ru.zhiev.githubviewer.domain.models.UserModel
 
@@ -43,6 +44,29 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 email = it.email,
                 bio = it.bio,
                 avatarUrl = it.avatarUrl
+            )
+        }
+    }
+
+    override suspend fun searchRepositories(token: String, query: String): RepositorySearchModel {
+        return gitHubAPIService.searchRepositories(token, query).let {
+            RepositorySearchModel(
+                totalCount = it.totalCount,
+                incompleteResults = it.incompleteResults,
+                items = it.items.map { repo ->
+                    GitHubRepositoryModel(
+                        id = repo.id,
+                        name = repo.name,
+                        isPrivate = repo.isPrivate,
+                        description = repo.description,
+                        language = repo.language,
+                        pushedAt = repo.pushedAt,
+                        owner = OwnerModel(
+                            login = repo.owner.login,
+                            id = repo.owner.id
+                        )
+                    )
+                }
             )
         }
     }

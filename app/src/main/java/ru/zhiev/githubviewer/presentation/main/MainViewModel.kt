@@ -16,9 +16,6 @@ import java.lang.Exception
 class MainViewModel(
     private val workWithGitHubUseCase: WorkWithGitHubUseCase
 ) : ViewModel() {
-    private val _accessToken = MutableLiveData<TokenModel>()
-    val accessToken: LiveData<TokenModel>
-        get() = _accessToken
 
     private val _userData = MutableLiveData<UserModel>()
     val userData: LiveData<UserModel>
