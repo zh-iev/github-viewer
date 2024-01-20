@@ -14,4 +14,7 @@
     <string name="update">Update</string>
     <string name="welcome">Welcome</string>
     <string name="login_success">Login was completed successfully!</string>
+    <string name="by_repositories">By repositories</string>
+    <string name="by_users">By users</string>
+    <string name="count_of_results">Number of results: %d</string>
 </resources>

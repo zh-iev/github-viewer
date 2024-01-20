@@ -6,6 +6,7 @@ import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
 import ru.zhiev.githubviewer.domain.models.UserModel
+import ru.zhiev.githubviewer.domain.models.UsersSearchModel
 
 class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : RepositoryModel {
 
@@ -65,6 +66,24 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                             login = repo.owner.login,
                             id = repo.owner.id
                         )
+                    )
+                }
+            )
+        }
+    }
+
+    override suspend fun searchUsers(token: String, query: String): UsersSearchModel {
+        return gitHubAPIService.searchUsers(token, query).let {
+            UsersSearchModel(
+                totalCount = it.totalCount,
+                incompleteResults = it.incompleteResults,
+                items = it.items.map { user ->
+                    UserModel(
+                        login = user.login,
+                        name = user.name,
+                        email = user.email,
+                        bio = user.bio,
+                        avatarUrl = user.avatarUrl
                     )
                 }
             )

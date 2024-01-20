@@ -12,6 +12,7 @@ import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
 import ru.zhiev.githubviewer.data.apimodels.RepositorySearchApiModel
 import ru.zhiev.githubviewer.data.apimodels.TokenApiModel
 import ru.zhiev.githubviewer.data.apimodels.UserApiModel
+import ru.zhiev.githubviewer.data.apimodels.UsersSearchApiModel
 
 interface GitHubAPIService {
 
@@ -42,5 +43,12 @@ interface GitHubAPIService {
         @Header("Authorization") token: String,
         @Query("q") query: String
     ): RepositorySearchApiModel
+
+    @Headers("Accept: application/json")
+    @GET("search/users")
+    suspend fun searchUsers(
+        @Header("Authorization") token: String,
+        @Query("q") query: String
+    ): UsersSearchApiModel
 }
 

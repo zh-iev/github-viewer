@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.zhiev.githubviewer.GitHubViewerApplication
+import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.TokenManager
 import ru.zhiev.githubviewer.databinding.FragmentSearchBinding
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
@@ -35,19 +36,32 @@ class SearchFragment : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
         tokenManager = TokenManager(requireContext())
+        val token = tokenManager.accessToken ?: ""
 
         val progressBar: ProgressBar = binding.progressBar
+        var query: String
 
         binding.searchButton.setOnClickListener {
+            query = binding.searchField.text.toString()
             progressBar.visibility = View.VISIBLE
-            val query = binding.searchField.text.toString()
             if (query.isNotEmpty()) {
-                searchViewModel.searchRepositories(tokenManager.accessToken ?: "", query)
+                if (binding.byRepRB.isChecked) {
+                    searchViewModel.searchRepositories(token, query)
+                } else {
+                    searchViewModel.searchUsers(token, query)
+                }
             }
         }
 
         searchViewModel.foundRepositories.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
+            binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
+            Toast.makeText(requireContext(), "Repo: ${it.items.joinToString(",")}", Toast.LENGTH_LONG).show()
+        }
+
+        searchViewModel.foundUsers.observe(viewLifecycleOwner) {
+            progressBar.visibility = View.GONE
+            binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
             Toast.makeText(requireContext(), "Repo: ${it.items.joinToString(",")}", Toast.LENGTH_LONG).show()
         }
 

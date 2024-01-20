@@ -14,4 +14,7 @@
     <string name="update">Обновить</string>
     <string name="welcome">Добро пожаловать,</string>
     <string name="login_success">Вход в аккаунт выполнен!</string>
+    <string name="by_repositories">По репозиториям</string>
+    <string name="by_users">По пользователям</string>
+    <string name="count_of_results">Количество результатов: %d</string>
 </resources>

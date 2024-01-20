@@ -5,6 +5,7 @@ import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
 import ru.zhiev.githubviewer.domain.models.UserModel
+import ru.zhiev.githubviewer.domain.models.UsersSearchModel
 
 class WorkWithGitHubUseCase(private val appRepository: RepositoryModel) {
     suspend fun getAccessToken(
@@ -25,5 +26,8 @@ class WorkWithGitHubUseCase(private val appRepository: RepositoryModel) {
 
     suspend fun searchRepositories(token: String, query: String): RepositorySearchModel {
         return appRepository.searchRepositories(token, query)
+    }
+    suspend fun searchUsers(token: String, query: String) : UsersSearchModel {
+        return appRepository.searchUsers(token, query)
     }
 }
