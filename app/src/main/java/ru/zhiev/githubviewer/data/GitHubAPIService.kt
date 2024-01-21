@@ -9,6 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import ru.zhiev.githubviewer.Constants
 import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
+import ru.zhiev.githubviewer.data.apimodels.IssueApiModel
 import ru.zhiev.githubviewer.data.apimodels.RepositorySearchApiModel
 import ru.zhiev.githubviewer.data.apimodels.TokenApiModel
 import ru.zhiev.githubviewer.data.apimodels.UserApiModel
@@ -50,5 +51,13 @@ interface GitHubAPIService {
         @Header("Authorization") token: String,
         @Query("q") query: String
     ): UsersSearchApiModel
+
+
+    @Headers("Accept: */*")
+    @GET("issues")
+    suspend fun getIssues(
+        @Header("Authorization") token: String
+    ): List<IssueApiModel>
+
 }
 

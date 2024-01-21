@@ -1,6 +1,7 @@
 package ru.zhiev.githubviewer.data
 
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
+import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.models.OwnerModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
@@ -84,6 +85,29 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                         email = user.email,
                         bio = user.bio,
                         avatarUrl = user.avatarUrl
+                    )
+                }
+            )
+        }
+    }
+
+    override suspend fun getIssues(token: String): List<IssueModel> {
+        return gitHubAPIService.getIssues(token).map {
+            IssueModel(
+                title = it.title,
+                body = it.body,
+                repository = it.repository.let {repo ->
+                    GitHubRepositoryModel(
+                        id = repo.id,
+                        name = repo.name,
+                        isPrivate = repo.isPrivate,
+                        description = repo.description,
+                        language = repo.language,
+                        pushedAt = repo.pushedAt,
+                        owner = OwnerModel(
+                            login = repo.owner.login,
+                            id = repo.owner.id
+                        )
                     )
                 }
             )

@@ -9,7 +9,7 @@
     <string name="action_logout">Выйти из аккаунта</string>
     <string name="menu_home">Домашняя</string>
     <string name="menu_search">Поиск</string>
-    <string name="menu_slideshow">Слайдшоу</string>
+    <string name="menu_issues">Задачи (Issues)</string>
     <string name="login_with_github">Войти через GitHub</string>
     <string name="update">Обновить</string>
     <string name="welcome">Добро пожаловать,</string>

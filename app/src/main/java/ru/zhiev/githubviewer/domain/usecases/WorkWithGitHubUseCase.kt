@@ -1,6 +1,7 @@
 package ru.zhiev.githubviewer.domain.usecases
 
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
+import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
@@ -29,5 +30,9 @@ class WorkWithGitHubUseCase(private val appRepository: RepositoryModel) {
     }
     suspend fun searchUsers(token: String, query: String) : UsersSearchModel {
         return appRepository.searchUsers(token, query)
+    }
+
+    suspend fun getIssues(token: String) : List<IssueModel> {
+        return appRepository.getIssues(token)
     }
 }
