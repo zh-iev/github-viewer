@@ -8,6 +8,8 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ru.zhiev.githubviewer.GitHubViewerApplication
 import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.TokenManager
@@ -39,6 +41,8 @@ class SearchFragment : Fragment() {
         val token = tokenManager.accessToken ?: ""
 
         val progressBar: ProgressBar = binding.progressBar
+        val userRecyclerView: RecyclerView = binding.userRecyclerView
+        var usersAdapter: UsersAdapter
         var query: String
 
         binding.searchButton.setOnClickListener {
@@ -47,11 +51,16 @@ class SearchFragment : Fragment() {
             if (query.isNotEmpty()) {
                 if (binding.byRepRB.isChecked) {
                     searchViewModel.searchRepositories(token, query)
+                    userRecyclerView.visibility = View.GONE
+                    binding.includeRepositoriesRv.cardView.visibility = View.VISIBLE
                 } else {
                     searchViewModel.searchUsers(token, query)
+                    binding.includeRepositoriesRv.cardView.visibility = View.GONE
+                    userRecyclerView.visibility = View.VISIBLE
                 }
             }
         }
+
 
         searchViewModel.foundRepositories.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
@@ -62,7 +71,12 @@ class SearchFragment : Fragment() {
         searchViewModel.foundUsers.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
             binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
-            Toast.makeText(requireContext(), "Repo: ${it.items.joinToString(",")}", Toast.LENGTH_LONG).show()
+
+            usersAdapter = UsersAdapter(it.items) { clickedUser ->
+                Toast.makeText(requireContext(), "Clicked: ${clickedUser.login}", Toast.LENGTH_LONG).show()
+            }
+            userRecyclerView.adapter = usersAdapter
+            userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
         return root

@@ -7,6 +7,31 @@
     android:minHeight="48dp"
     tools:context=".presentation.ui.search.SearchFragment">
 
+    <FrameLayout
+        android:id="@+id/bottomSoftBordersLayout"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:background="@drawable/soft_borders"
+        android:elevation="10dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/topSoftBordersLayout"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:background="@drawable/soft_borders"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countResults">
+
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -95,6 +120,30 @@
             android:text="@string/by_users" />
 
     </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fitsSystemWindows="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countResults"
+        tools:context=".presentation.ui.search.SearchFragment"
+        tools:listitem="@layout/user_rv_item" />
+
+    <include
+        android:id="@+id/includeRepositoriesRv"
+        layout="@layout/user_rv_item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/userRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/userRecyclerView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
