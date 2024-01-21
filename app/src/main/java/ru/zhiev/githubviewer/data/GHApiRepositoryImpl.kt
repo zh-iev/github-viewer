@@ -1,7 +1,6 @@
 package ru.zhiev.githubviewer.data
 
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
-import ru.zhiev.githubviewer.domain.models.OwnerModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
 import ru.zhiev.githubviewer.domain.models.UserModel
@@ -17,9 +16,12 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 description = it.description,
                 language = it.language,
                 pushedAt = it.pushedAt,
-                owner = OwnerModel(
+                owner = UserModel(
                     login = it.owner.login,
-                    id = it.owner.id
+                    name = it.owner.name,
+                    email = it.owner.email,
+                    bio = it.owner.bio,
+                    avatarUrl = it.owner.avatarUrl
                 )
             )
         }
