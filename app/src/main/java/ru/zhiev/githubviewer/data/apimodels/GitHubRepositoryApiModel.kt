@@ -10,5 +10,11 @@ data class GitHubRepositoryApiModel (
     val description: String,
     val language: String,
     @SerializedName("pushed_at")
-    val pushedAt: String
+    val pushedAt: String,
+    val owner: OwnerApiModel
+)
+
+data class OwnerApiModel (
+    val login: String,
+    val id: Int
 )

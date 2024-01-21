@@ -6,5 +6,11 @@ data class GitHubRepositoryModel (
     val isPrivate: Boolean,
     val description: String? = "",
     val language: String? = "",
-    val pushedAt: String? = ""
+    val pushedAt: String? = "",
+    val owner: OwnerModel
+)
+
+data class OwnerModel (
+    val login: String,
+    val id: Int
 )

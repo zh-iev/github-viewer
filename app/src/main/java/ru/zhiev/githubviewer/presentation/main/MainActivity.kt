@@ -72,7 +72,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            accessToken?.let {
+                viewModel.getUserData(it)
+                viewModel.getRepositories(it)
+            }
+            val owners = viewModel.repositories.value?.map{
+                it.owner.login
+            }
+            val ownersString = owners?.joinToString(", ")
+            Snackbar.make(view, "Owners: $ownersString", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
