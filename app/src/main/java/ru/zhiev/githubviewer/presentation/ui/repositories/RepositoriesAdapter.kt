@@ -7,9 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class RepositoriesAdapter(
     private val dataSet: List<GitHubRepositoryModel>,
@@ -24,13 +28,24 @@ class RepositoriesAdapter(
         override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
             val repository = dataSet[position]
             viewHolder.nameRepo.text = repository.name
-            viewHolder.descriptionRepo.text = repository.description
-            viewHolder.languageRepo.text = repository.language
-            viewHolder.lastUpdatedRepo.text = repository.pushedAt
+            setVisibilityWithData(viewHolder.descriptionRepo, repository.description)
+            setVisibilityWithData(viewHolder.languageRepo, repository.language)
+
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+
+            val date: Date = inputFormat.parse(repository.pushedAt)
+            val formattedDate: String = outputFormat.format(date)
+            setVisibilityWithData(viewHolder.lastUpdatedRepo, "Last update: $formattedDate")
+
+
             viewHolder.ownerRepo.text = repository.owner.login
             Glide.with(viewHolder.avatarRepo)
                 .load(repository.owner.avatarUrl)
+                .apply(RequestOptions().circleCrop())
                 .into(viewHolder.avatarRepo)
+
+
 
             viewHolder.itemView.setOnClickListener {
                 onItemClick(repository)
@@ -54,4 +69,12 @@ class RepositoriesAdapter(
                 ownerRepo = view.findViewById(R.id.ownerRepo)
             }
         }
+    private fun setVisibilityWithData(view: View, data: String?) {
+        if (data.isNullOrEmpty()) {
+            view.visibility = View.GONE
+        } else {
+            view.visibility = View.VISIBLE
+            (view as TextView).text = data
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package ru.zhiev.githubviewer.presentation.ui.repositories
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.zhiev.githubviewer.GitHubViewerApplication
+import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.TokenManager
 import ru.zhiev.githubviewer.databinding.FragmentRepositotiesBinding
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
@@ -48,6 +51,11 @@ class RepositoriesFragment : Fragment() {
             }
             repositoriesRecyclerView.adapter = repositoriesAdapter
             repositoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            val dividerDrawable: Drawable? = requireContext().getDrawable(R.drawable.divider_for_rv)
+            val dividerItemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+            dividerItemDecoration.setDrawable(dividerDrawable!!)
+            repositoriesRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
         return root
