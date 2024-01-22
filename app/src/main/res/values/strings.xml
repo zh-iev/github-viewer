@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_logout">Log out</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_repositories">Repositories</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="login_with_github">Log in with GitHub</string>
