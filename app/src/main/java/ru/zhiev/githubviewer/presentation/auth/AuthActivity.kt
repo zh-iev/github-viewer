@@ -38,7 +38,7 @@ class AuthActivity : AppCompatActivity() {
         tokenManager = TokenManager(this)
 
         if (!tokenManager.accessToken.isNullOrEmpty()) {
-            startMainActivity(tokenManager.accessToken!!)
+            startMainActivity()
         } else {
             webView = binding.webView
             CookieManager.getInstance().removeAllCookies(null)
@@ -62,7 +62,7 @@ class AuthActivity : AppCompatActivity() {
 
         viewModel.accessToken.observe(this) { token ->
             if (token.accessToken.isNotEmpty()) {
-                startMainActivity(token.accessToken)
+                startMainActivity()
                 tokenManager.accessToken = token.accessToken
             } else {
                 Toast.makeText(this, "Error: Empty access token", Toast.LENGTH_SHORT).show()
@@ -70,9 +70,8 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun startMainActivity(accessToken: String) {
+    private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(MainActivity.ACCESS_TOKEN, accessToken)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }

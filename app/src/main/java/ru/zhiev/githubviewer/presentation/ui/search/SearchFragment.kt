@@ -65,7 +65,6 @@ class SearchFragment : Fragment() {
         searchViewModel.foundRepositories.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
             binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
-            Toast.makeText(requireContext(), "Repo: ${it.items.joinToString(",")}", Toast.LENGTH_LONG).show()
         }
 
         searchViewModel.foundUsers.observe(viewLifecycleOwner) {

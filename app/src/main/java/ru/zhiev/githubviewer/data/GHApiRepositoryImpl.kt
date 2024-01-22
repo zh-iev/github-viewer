@@ -1,6 +1,7 @@
 package ru.zhiev.githubviewer.data
 
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
+import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.RepositorySearchModel
 import ru.zhiev.githubviewer.domain.models.TokenModel
@@ -64,9 +65,12 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                         description = repo.description,
                         language = repo.language,
                         pushedAt = repo.pushedAt,
-                        owner = OwnerModel(
+                        owner = UserModel(
                             login = repo.owner.login,
-                            id = repo.owner.id
+                            name = repo.owner.name,
+                            email = repo.owner.email,
+                            bio = repo.owner.bio,
+                            avatarUrl = repo.owner.avatarUrl
                         )
                     )
                 }
@@ -98,7 +102,7 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 title = it.title,
                 body = it.body,
                 state = it.state,
-                repository = it.repository.let {repo ->
+                repository = it.repository.let { repo ->
                     GitHubRepositoryModel(
                         id = repo.id,
                         name = repo.name,
@@ -106,9 +110,12 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                         description = repo.description,
                         language = repo.language,
                         pushedAt = repo.pushedAt,
-                        owner = OwnerModel(
+                        owner = UserModel(
                             login = repo.owner.login,
-                            id = repo.owner.id
+                            name = repo.owner.name,
+                            email = repo.owner.email,
+                            bio = repo.owner.bio,
+                            avatarUrl = repo.owner.avatarUrl
                         )
                     )
                 }

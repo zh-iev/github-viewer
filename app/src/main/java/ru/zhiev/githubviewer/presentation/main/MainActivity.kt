@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,10 +28,6 @@ import ru.zhiev.githubviewer.databinding.NavHeaderMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        const val ACCESS_TOKEN = "token"
-    }
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -53,16 +48,15 @@ class MainActivity : AppCompatActivity() {
             MainViewModelFactory(workWithGitHubUseCase)
         )[MainViewModel::class.java]
 
-        val accessToken = intent?.getStringExtra(ACCESS_TOKEN)
+        val accessToken = tokenManager.accessToken
         accessToken?.let {
             viewModel.getUserData(it)
-            viewModel.getRepositories(it)
         }
 
+        val navHeaderView = binding.navView.getHeaderView(0)
+        val headerBinding = NavHeaderMainBinding.bind(navHeaderView)
         viewModel.userData.observe(this) {
             Toast.makeText(this, "${getString(R.string.welcome)} ${it.name ?: ""}!", Toast.LENGTH_SHORT).show()
-            val navHeaderView = binding.navView.getHeaderView(0)
-            val headerBinding = NavHeaderMainBinding.bind(navHeaderView)
             Glide.with(this)
                 .load(it.avatarUrl)
                 .apply(RequestOptions().circleCrop())
@@ -71,25 +65,13 @@ class MainActivity : AppCompatActivity() {
             headerBinding.login.text = it.login
         }
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            accessToken?.let {
-                viewModel.getUserData(it)
-                viewModel.getRepositories(it)
-            }
-            val owners = viewModel.repositories.value?.map{
-                it.owner.login
-            }
-            val ownersString = owners?.joinToString(", ")
-            Snackbar.make(view, "Owners: $ownersString", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_repositories, R.id.nav_gallery, R.id.nav_issues
+                R.id.nav_repositories, R.id.nav_search, R.id.nav_issues
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
