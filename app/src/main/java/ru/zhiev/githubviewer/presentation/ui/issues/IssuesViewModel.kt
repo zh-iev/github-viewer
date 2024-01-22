@@ -10,7 +10,7 @@ import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
 import java.lang.Exception
 
-class SlideshowViewModel(
+class IssuesViewModel(
     private val workWithGitHubUseCase: WorkWithGitHubUseCase,
 ) : ViewModel() {
     private val _issues = MutableLiveData<List<IssueModel>>()
@@ -29,10 +29,10 @@ class SlideshowViewModel(
     }
 }
 
-class SlideshowViewModelFactory(
+class IssuesViewModelFactory(
     private val workWithGitHubUseCase: WorkWithGitHubUseCase,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SlideshowViewModel(workWithGitHubUseCase) as T
+        return IssuesViewModel(workWithGitHubUseCase) as T
     }
 }

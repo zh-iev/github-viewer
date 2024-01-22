@@ -17,4 +17,6 @@
     <string name="by_repositories">By repositories</string>
     <string name="by_users">By users</string>
     <string name="count_of_results">Number of results: %d</string>
+    <string name="repository">Repository</string>
+    <string name="state">State</string>
 </resources>

@@ -17,4 +17,6 @@
     <string name="by_repositories">По репозиториям</string>
     <string name="by_users">По пользователям</string>
     <string name="count_of_results">Количество результатов: %d</string>
+    <string name="repository">Репозиторий</string>
+    <string name="state">Состояние</string>
 </resources>

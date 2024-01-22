@@ -96,6 +96,7 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
             IssueModel(
                 title = it.title,
                 body = it.body,
+                state = it.state,
                 repository = it.repository.let {repo ->
                     GitHubRepositoryModel(
                         id = repo.id,

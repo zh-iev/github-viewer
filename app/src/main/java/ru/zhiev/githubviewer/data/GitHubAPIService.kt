@@ -54,10 +54,9 @@ interface GitHubAPIService {
 
 
     @Headers("Accept: */*")
-    @GET("issues")
+    @GET("issues?filter=all&state=all")
     suspend fun getIssues(
         @Header("Authorization") token: String
     ): List<IssueApiModel>
-
 }
 
