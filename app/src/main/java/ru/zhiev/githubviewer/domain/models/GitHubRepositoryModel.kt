@@ -7,10 +7,5 @@ data class GitHubRepositoryModel (
     val description: String? = "",
     val language: String? = "",
     val pushedAt: String? = "",
-    val owner: OwnerModel
-)
-
-data class OwnerModel (
-    val login: String,
-    val id: Int
+    val owner: UserModel
 )
