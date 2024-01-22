@@ -56,7 +56,10 @@ class MainActivity : AppCompatActivity() {
         val navHeaderView = binding.navView.getHeaderView(0)
         val headerBinding = NavHeaderMainBinding.bind(navHeaderView)
         viewModel.userData.observe(this) {
-            Toast.makeText(this, "${getString(R.string.welcome)} ${it.name ?: ""}!", Toast.LENGTH_SHORT).show()
+            if (!viewModel.wasWelcome) {
+                Toast.makeText(this, "${getString(R.string.welcome)} ${it.name ?: ""}!", Toast.LENGTH_SHORT).show()
+                viewModel.wasWelcome = true
+            }
             Glide.with(this)
                 .load(it.avatarUrl)
                 .apply(RequestOptions().circleCrop())

@@ -19,4 +19,6 @@
     <string name="count_of_results">Number of results: %d</string>
     <string name="repository">Repository</string>
     <string name="state">State</string>
+    <string name="enterReq">Enter your query in the search field</string>
+    <string name="lastUpd">Last update</string>
 </resources>

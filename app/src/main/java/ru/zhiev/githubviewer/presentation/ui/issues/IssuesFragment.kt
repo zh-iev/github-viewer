@@ -50,14 +50,15 @@ class IssuesFragment : Fragment() {
 
         val progressBar: ProgressBar = binding.progressBar2
         val webView: WebView = binding.issueWebView
+        val flavour = CommonMarkFlavourDescriptor()
         val closeButton: FloatingActionButton = binding.closeFAButton
 
         issuesViewModel.getIssues(token)
         issuesViewModel.issues.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
             issuesAdapter = IssuesAdapter(requireContext(), it) { clickedIssue ->
+                binding.progressBar2.visibility = View.VISIBLE
                 val src = clickedIssue.body ?: ""
-                val flavour = CommonMarkFlavourDescriptor()
                 val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(src)
                 val html = HtmlGenerator(src, parsedTree, flavour).generateHtml()
                 val htmlWithFormatting = html
@@ -66,7 +67,12 @@ class IssuesFragment : Fragment() {
                 closeButton.visibility = View.VISIBLE
                 webView.settings.javaScriptEnabled = true
                 webView.webChromeClient = WebChromeClient()
-                webView.webViewClient = WebViewClient()
+                webView.webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        super.onPageFinished(view, url)
+                        binding.progressBar2.visibility = View.GONE
+                    }
+                }
 
                 webView.loadDataWithBaseURL(null, htmlWithFormatting, "text/html", "UTF-8", null)
                 webView.visibility = View.VISIBLE

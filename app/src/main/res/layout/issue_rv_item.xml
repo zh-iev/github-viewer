@@ -20,7 +20,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
-            android:backgroundTint="?attr/colorButtonNormal"
+            android:backgroundTint="?attr/backgroundItems"
             app:cardCornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,10 +59,10 @@
                     android:id="@+id/stateIssue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:alpha="0.8"
-                    android:backgroundTint="?attr/colorAccent"
+                    android:backgroundTint="?attr/backgroundYellowItems"
                     android:clickable="false"
                     android:text="@string/menu_issues" />
 

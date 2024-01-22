@@ -15,6 +15,7 @@ import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.TokenManager
 import ru.zhiev.githubviewer.databinding.FragmentSearchBinding
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
+import ru.zhiev.githubviewer.presentation.ui.repositories.RepositoriesAdapter
 
 class SearchFragment : Fragment() {
 
@@ -42,22 +43,26 @@ class SearchFragment : Fragment() {
 
         val progressBar: ProgressBar = binding.progressBar
         val userRecyclerView: RecyclerView = binding.userRecyclerView
+        val reposRecyclerView: RecyclerView = binding.repoSearchRV
         var usersAdapter: UsersAdapter
+        var reposAdapter: RepositoriesAdapter
         var query: String
 
         binding.searchButton.setOnClickListener {
             query = binding.searchField.text.toString()
-            progressBar.visibility = View.VISIBLE
             if (query.isNotEmpty()) {
+                progressBar.visibility = View.VISIBLE
                 if (binding.byRepRB.isChecked) {
                     searchViewModel.searchRepositories(token, query)
                     userRecyclerView.visibility = View.GONE
-                    binding.includeRepositoriesRv.cardView.visibility = View.VISIBLE
+                    binding.repoSearchRV.visibility = View.VISIBLE
                 } else {
                     searchViewModel.searchUsers(token, query)
-                    binding.includeRepositoriesRv.cardView.visibility = View.GONE
+                    binding.repoSearchRV.visibility = View.GONE
                     userRecyclerView.visibility = View.VISIBLE
                 }
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.enterReq), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -65,6 +70,13 @@ class SearchFragment : Fragment() {
         searchViewModel.foundRepositories.observe(viewLifecycleOwner) {
             progressBar.visibility = View.GONE
             binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
+
+            reposAdapter = RepositoriesAdapter(requireContext(), it.items) { clickedRepos ->
+                Toast.makeText(requireContext(), "Clicked: ${clickedRepos.name}",
+                    Toast.LENGTH_LONG).show()
+            }
+            reposRecyclerView.adapter = reposAdapter
+            reposRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
         searchViewModel.foundUsers.observe(viewLifecycleOwner) {

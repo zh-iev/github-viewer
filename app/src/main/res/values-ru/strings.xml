@@ -19,4 +19,6 @@
     <string name="count_of_results">Количество результатов: %d</string>
     <string name="repository">Репозиторий</string>
     <string name="state">Состояние</string>
+    <string name="enterReq">Введите запрос в поле поиска</string>
+    <string name="lastUpd">Последнее обновление</string>
 </resources>

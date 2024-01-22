@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,13 +44,13 @@ class RepositoriesFragment : Fragment() {
 
         repositoriesViewModel.getRepos(token)
         repositoriesViewModel.repositories.observe(viewLifecycleOwner) {
-            repositoriesAdapter = RepositoriesAdapter(it) {clickedRepos ->
+            repositoriesAdapter = RepositoriesAdapter(requireContext(), it) {clickedRepos ->
                 Toast.makeText(requireContext(), "Clicked: ${clickedRepos.name}",
                 Toast.LENGTH_LONG).show()
             }
             repositoriesRecyclerView.adapter = repositoriesAdapter
             repositoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
+            binding.progressBar3.visibility = View.GONE
             val dividerDrawable: Drawable? = requireContext().getDrawable(R.drawable.divider_for_rv)
             val dividerItemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
             dividerItemDecoration.setDrawable(dividerDrawable!!)

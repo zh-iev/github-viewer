@@ -1,5 +1,6 @@
 package ru.zhiev.githubviewer.presentation.ui.repositories
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.chip.Chip
 import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
-import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class RepositoriesAdapter(
+    private val context: Context,
     private val dataSet: List<GitHubRepositoryModel>,
     private val onItemClick: (GitHubRepositoryModel) -> Unit)
     : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
@@ -36,7 +38,7 @@ class RepositoriesAdapter(
 
             val date: Date = inputFormat.parse(repository.pushedAt)
             val formattedDate: String = outputFormat.format(date)
-            setVisibilityWithData(viewHolder.lastUpdatedRepo, "Last update: $formattedDate")
+            setVisibilityWithData(viewHolder.lastUpdatedRepo, "${context.getString(R.string.lastUpd)}: $formattedDate")
 
 
             viewHolder.ownerRepo.text = repository.owner.login
@@ -56,7 +58,7 @@ class RepositoriesAdapter(
             val avatarRepo: ImageView
             val nameRepo: TextView
             val descriptionRepo: TextView
-            val languageRepo: TextView
+            val languageRepo: Chip
             val lastUpdatedRepo: TextView
             val ownerRepo: TextView
 
@@ -64,7 +66,7 @@ class RepositoriesAdapter(
                 avatarRepo = view.findViewById(R.id.avatarRepo)
                 nameRepo = view.findViewById(R.id.nameRepo)
                 descriptionRepo = view.findViewById(R.id.descriptionRepo)
-                languageRepo = view.findViewById(R.id.languageRepo)
+                languageRepo = view.findViewById(R.id.languageChip)
                 lastUpdatedRepo = view.findViewById(R.id.lastUpdatedRepo)
                 ownerRepo = view.findViewById(R.id.ownerRepo)
             }
