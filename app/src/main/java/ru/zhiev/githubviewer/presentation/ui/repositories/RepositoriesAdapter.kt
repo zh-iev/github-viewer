@@ -17,7 +17,7 @@ class RepositoriesAdapter(
     : RecyclerView.Adapter<RepositoriesAdapter.ViewHolder>() {
         override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
             val view =
-                LayoutInflater.from(viewGroup.context).inflate(R.layout.fragment_repositoties, viewGroup, false)
+                LayoutInflater.from(viewGroup.context).inflate(R.layout.fragment_repositories_item, viewGroup, false)
             return ViewHolder(view)
         }
 
@@ -28,9 +28,8 @@ class RepositoriesAdapter(
             viewHolder.languageRepo.text = repository.language
             viewHolder.lastUpdatedRepo.text = repository.pushedAt
             viewHolder.ownerRepo.text = repository.owner.login
-            viewHolder.avatarRepo = repository.owner.avatarURL
             Glide.with(viewHolder.avatarRepo)
-                .load(owner.avatarUrl)
+                .load(repository.owner.avatarUrl)
                 .into(viewHolder.avatarRepo)
 
             viewHolder.itemView.setOnClickListener {

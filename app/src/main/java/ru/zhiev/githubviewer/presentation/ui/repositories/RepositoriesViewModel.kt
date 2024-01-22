@@ -29,6 +29,6 @@ class RepositoriesViewModel (private val workWithGitHubUseCase: WorkWithGitHubUs
 class RepositoriesViewModelFactory(private val workWithGitHubUseCase: WorkWithGitHubUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return RepositoriesViewModelFactory(workWithGitHubUseCase) as T
+        return RepositoriesViewModel(workWithGitHubUseCase) as T
     }
 }
