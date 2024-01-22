@@ -8,10 +8,15 @@
     <string name="action_logout">Log out</string>
 
     <string name="menu_repositories">Repositories</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_issues">Issues</string>
     <string name="login_with_github">Log in with GitHub</string>
     <string name="update">Update</string>
     <string name="welcome">Welcome</string>
     <string name="login_success">Login was completed successfully!</string>
+    <string name="by_repositories">By repositories</string>
+    <string name="by_users">By users</string>
+    <string name="count_of_results">Number of results: %d</string>
+    <string name="repository">Repository</string>
+    <string name="state">State</string>
 </resources>
