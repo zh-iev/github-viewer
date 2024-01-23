@@ -55,6 +55,7 @@ class IssuesFragment : Fragment() {
 
         issuesViewModel.getIssues(token)
         issuesViewModel.issues.observe(viewLifecycleOwner) {
+            binding.swipeRefreshIssues.isRefreshing = false
             progressBar.visibility = View.GONE
             issuesAdapter = IssuesAdapter(requireContext(), it) { clickedIssue ->
                 binding.progressBar2.visibility = View.VISIBLE
@@ -89,7 +90,6 @@ class IssuesFragment : Fragment() {
 
         binding.swipeRefreshIssues.setOnRefreshListener {
             issuesViewModel.getIssues(token)
-            binding.swipeRefreshIssues.isRefreshing = false
         }
 
         return root

@@ -44,6 +44,7 @@ class RepositoriesFragment : Fragment() {
 
         repositoriesViewModel.getRepos(token)
         repositoriesViewModel.repositories.observe(viewLifecycleOwner) {
+            binding.swipeRefreshRepos.isRefreshing = false
             repositoriesAdapter = RepositoriesAdapter(requireContext(), it) {clickedRepos ->
                 Toast.makeText(requireContext(), "Clicked: ${clickedRepos.name}",
                 Toast.LENGTH_LONG).show()
@@ -59,7 +60,6 @@ class RepositoriesFragment : Fragment() {
 
         binding.swipeRefreshRepos.setOnRefreshListener {
             repositoriesViewModel.getRepos(token)
-            binding.swipeRefreshRepos.isRefreshing = false
         }
 
         binding.addFAB.setOnClickListener {

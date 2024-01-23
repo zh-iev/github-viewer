@@ -57,10 +57,8 @@ class SearchFragment : Fragment() {
                 binding.countResults.text = getString(R.string.count_of_results, 0)
                 if (binding.byRepRB.isChecked) {
                     searchViewModel.searchRepositories(token, query)
-                    binding.repoSearchRV.visibility = View.VISIBLE
                 } else {
                     searchViewModel.searchUsers(token, query)
-                    userRecyclerView.visibility = View.VISIBLE
                 }
             } else {
                 Toast.makeText(requireContext(), getString(R.string.enterReq), Toast.LENGTH_SHORT).show()
@@ -69,6 +67,7 @@ class SearchFragment : Fragment() {
 
 
         searchViewModel.foundRepositories.observe(viewLifecycleOwner) {
+            binding.repoSearchRV.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
 
@@ -81,6 +80,7 @@ class SearchFragment : Fragment() {
         }
 
         searchViewModel.foundUsers.observe(viewLifecycleOwner) {
+            userRecyclerView.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             binding.countResults.text = getString(R.string.count_of_results, it.totalCount)
 
