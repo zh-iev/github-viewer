@@ -21,4 +21,10 @@
     <string name="state">Состояние</string>
     <string name="enterReq">Введите запрос в поле поиска</string>
     <string name="lastUpd">Последнее обновление</string>
+    <string name="create">Создать</string>
+    <string name="privateRepos">Закрытый</string>
+    <string name="publicRepos">Открытый</string>
+    <string name="nameRepos">Название репозитория</string>
+    <string name="descriptRepos">Описание репозитория</string>
+    <string name="reqSend">Запрос отправлен</string>
 </resources>

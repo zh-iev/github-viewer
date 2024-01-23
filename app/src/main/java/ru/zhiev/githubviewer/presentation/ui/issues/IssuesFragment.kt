@@ -87,6 +87,11 @@ class IssuesFragment : Fragment() {
             issuesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
+        binding.swipeRefreshIssues.setOnRefreshListener {
+            issuesViewModel.getIssues(token)
+            binding.swipeRefreshIssues.isRefreshing = false
+        }
+
         return root
     }
 

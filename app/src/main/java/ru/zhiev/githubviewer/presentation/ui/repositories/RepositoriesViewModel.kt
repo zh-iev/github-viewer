@@ -12,12 +12,25 @@ import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
 
 class RepositoriesViewModel (private val workWithGitHubUseCase: WorkWithGitHubUseCase) : ViewModel() {
 
-    private val _repositoties = MutableLiveData<List<GitHubRepositoryModel>>()
-    val repositories: LiveData<List<GitHubRepositoryModel>> get() =_repositoties
+    private val _repositories = MutableLiveData<List<GitHubRepositoryModel>>()
+    val repositories: LiveData<List<GitHubRepositoryModel>> get() =_repositories
     fun getRepos(token: String) {
         viewModelScope.launch {
             try {
-                _repositoties.value = workWithGitHubUseCase.getRepositories("bearer $token")
+                var repo = workWithGitHubUseCase.getRepositories("bearer $token")
+                repo = repo.sortedByDescending { it.pushedAt }
+                _repositories.value = repo
+            }
+            catch (e: Exception) {
+                Log.d("ER_Repo", "error $e")
+            }
+        }
+    }
+
+    fun createRepository(token: String, repository: GitHubRepositoryModel) {
+        viewModelScope.launch {
+            try {
+                workWithGitHubUseCase.createRepository("bearer $token", repository)
             }
             catch (e: Exception) {
                 Log.d("ER_Repo", "error $e")

@@ -1,4 +1,4 @@
-package ru.zhiev.githubviewer.data
+package ru.zhiev.githubviewer.data.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

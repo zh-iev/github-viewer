@@ -1,5 +1,7 @@
-package ru.zhiev.githubviewer.data
+package ru.zhiev.githubviewer.data.repositories
 
+import ru.zhiev.githubviewer.data.network.GitHubAPIService
+import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
 import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
@@ -20,7 +22,7 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 language = it.language,
                 pushedAt = it.pushedAt,
                 owner = UserModel(
-                    login = it.owner.login,
+                    login = it.owner!!.login,
                     name = it.owner.name,
                     email = it.owner.email,
                     bio = it.owner.bio,
@@ -66,7 +68,7 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                         language = repo.language,
                         pushedAt = repo.pushedAt,
                         owner = UserModel(
-                            login = repo.owner.login,
+                            login = repo.owner!!.login,
                             name = repo.owner.name,
                             email = repo.owner.email,
                             bio = repo.owner.bio,
@@ -111,7 +113,7 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                         language = repo.language,
                         pushedAt = repo.pushedAt,
                         owner = UserModel(
-                            login = repo.owner.login,
+                            login = repo.owner!!.login,
                             name = repo.owner.name,
                             email = repo.owner.email,
                             bio = repo.owner.bio,
@@ -121,5 +123,13 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 }
             )
         }
+    }
+
+    override suspend fun createRepository(token: String, repository: GitHubRepositoryModel) {
+        gitHubAPIService.createRepository(token = token,
+            GitHubRepositoryApiModel(
+                name = repository.name,
+                isPrivate = repository.isPrivate,
+                description = repository.description))
     }
 }

@@ -41,7 +41,7 @@ class RepositoriesAdapter(
             setVisibilityWithData(viewHolder.lastUpdatedRepo, "${context.getString(R.string.lastUpd)}: $formattedDate")
 
 
-            viewHolder.ownerRepo.text = repository.owner.login
+            viewHolder.ownerRepo.text = repository.owner!!.login
             Glide.with(viewHolder.avatarRepo)
                 .load(repository.owner.avatarUrl)
                 .apply(RequestOptions().circleCrop())

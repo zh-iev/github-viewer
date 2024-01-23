@@ -21,4 +21,10 @@
     <string name="state">State</string>
     <string name="enterReq">Enter your query in the search field</string>
     <string name="lastUpd">Last update</string>
+    <string name="create">Create</string>
+    <string name="privateRepos">Private</string>
+    <string name="publicRepos">Public</string>
+    <string name="nameRepos">Repository name</string>
+    <string name="descriptRepos">Repository description</string>
+    <string name="reqSend">The request has been sent</string>
 </resources>

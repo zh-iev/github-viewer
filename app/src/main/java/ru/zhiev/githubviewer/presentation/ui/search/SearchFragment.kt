@@ -52,13 +52,14 @@ class SearchFragment : Fragment() {
             query = binding.searchField.text.toString()
             if (query.isNotEmpty()) {
                 progressBar.visibility = View.VISIBLE
+                userRecyclerView.visibility = View.GONE
+                reposRecyclerView.visibility = View.GONE
+                binding.countResults.text = getString(R.string.count_of_results, 0)
                 if (binding.byRepRB.isChecked) {
                     searchViewModel.searchRepositories(token, query)
-                    userRecyclerView.visibility = View.GONE
                     binding.repoSearchRV.visibility = View.VISIBLE
                 } else {
                     searchViewModel.searchUsers(token, query)
-                    binding.repoSearchRV.visibility = View.GONE
                     userRecyclerView.visibility = View.VISIBLE
                 }
             } else {

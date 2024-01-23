@@ -35,4 +35,8 @@ class WorkWithGitHubUseCase(private val appRepository: RepositoryModel) {
     suspend fun getIssues(token: String) : List<IssueModel> {
         return appRepository.getIssues(token)
     }
+
+    suspend fun createRepository(token: String, repository: GitHubRepositoryModel) {
+        return appRepository.createRepository(token, repository)
+    }
 }

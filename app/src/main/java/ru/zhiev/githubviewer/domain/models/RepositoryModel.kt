@@ -16,4 +16,6 @@ interface RepositoryModel {
     suspend fun searchUsers(token: String, query: String) : UsersSearchModel
 
     suspend fun getIssues(token: String) : List<IssueModel>
+
+    suspend fun createRepository(token: String, repository: GitHubRepositoryModel)
 }

@@ -57,6 +57,20 @@ class RepositoriesFragment : Fragment() {
             repositoriesRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
+        binding.swipeRefreshRepos.setOnRefreshListener {
+            repositoriesViewModel.getRepos(token)
+            binding.swipeRefreshRepos.isRefreshing = false
+        }
+
+        binding.addFAB.setOnClickListener {
+            val modalWindow = AddReposModalWindow()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.add(R.id.fragment_modal_window, modalWindow)
+            transaction.addToBackStack(null)
+            transaction.commit()
+            modalWindow.view?.bringToFront()
+        }
+
         return root
     }
 

@@ -1,5 +1,6 @@
-package ru.zhiev.githubviewer.data
+package ru.zhiev.githubviewer.data.network
 
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -58,5 +59,12 @@ interface GitHubAPIService {
     suspend fun getIssues(
         @Header("Authorization") token: String
     ): List<IssueApiModel>
+
+    @Headers("Accept: application/json")
+    @POST("user/repos")
+    suspend fun createRepository(
+        @Header("Authorization") token: String,
+        @Body repositoryData: GitHubRepositoryApiModel
+    )
 }
 
