@@ -47,7 +47,7 @@ class RepositoriesAdapter(
                 .apply(RequestOptions().circleCrop())
                 .into(viewHolder.avatarRepo)
 
-
+            if (repository.isPrivate) viewHolder.isPrivateRepos.visibility = View.VISIBLE
 
             viewHolder.itemView.setOnClickListener {
                 onItemClick(repository)
@@ -61,6 +61,7 @@ class RepositoriesAdapter(
             val languageRepo: Chip
             val lastUpdatedRepo: TextView
             val ownerRepo: TextView
+            val isPrivateRepos: ImageView
 
             init {
                 avatarRepo = view.findViewById(R.id.avatarRepo)
@@ -69,6 +70,7 @@ class RepositoriesAdapter(
                 languageRepo = view.findViewById(R.id.languageChip)
                 lastUpdatedRepo = view.findViewById(R.id.lastUpdatedRepo)
                 ownerRepo = view.findViewById(R.id.ownerRepo)
+                isPrivateRepos = view.findViewById(R.id.isPrivateIcon)
             }
         }
     private fun setVisibilityWithData(view: View, data: String?) {
