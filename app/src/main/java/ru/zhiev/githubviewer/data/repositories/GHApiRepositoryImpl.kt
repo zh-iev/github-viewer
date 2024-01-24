@@ -2,6 +2,7 @@ package ru.zhiev.githubviewer.data.repositories
 
 import ru.zhiev.githubviewer.data.network.GitHubAPIService
 import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
+import ru.zhiev.githubviewer.data.apimodels.IssueApiModel
 import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
 import ru.zhiev.githubviewer.domain.models.IssueModel
 import ru.zhiev.githubviewer.domain.models.RepositoryModel
@@ -131,5 +132,22 @@ class GHApiRepositoryImpl(private val gitHubAPIService: GitHubAPIService) : Repo
                 name = repository.name,
                 isPrivate = repository.isPrivate,
                 description = repository.description))
+    }
+
+    override suspend fun createIssue(token: String, owner: UserModel, issue: IssueModel) {
+        gitHubAPIService.createIssue(
+            token = token,
+            owner = owner.login,
+            repo = issue.repository.name,
+            issueData = IssueApiModel(
+                title = issue.title,
+                repository = GitHubRepositoryApiModel(
+                    name = issue.repository.name,
+                    isPrivate = issue.repository.isPrivate,
+                    description = issue.repository.description),
+                body = issue.body,
+                state = issue.state
+            )
+        )
     }
 }

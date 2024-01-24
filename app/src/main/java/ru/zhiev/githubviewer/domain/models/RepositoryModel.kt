@@ -18,4 +18,6 @@ interface RepositoryModel {
     suspend fun getIssues(token: String) : List<IssueModel>
 
     suspend fun createRepository(token: String, repository: GitHubRepositoryModel)
+
+    suspend fun createIssue(token: String, owner: UserModel, issue: IssueModel)
 }

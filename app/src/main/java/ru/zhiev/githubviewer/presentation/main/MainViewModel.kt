@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.zhiev.githubviewer.domain.models.GitHubRepositoryModel
+import ru.zhiev.githubviewer.domain.models.RepositoryModel
 import ru.zhiev.githubviewer.domain.models.UserModel
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
 import java.lang.Exception
@@ -18,6 +20,10 @@ class MainViewModel(
     private val _userData = MutableLiveData<UserModel>()
     val userData: LiveData<UserModel>
         get() = _userData
+
+    private val _repos = MutableLiveData<List<GitHubRepositoryModel>>()
+    val repos: LiveData<List<GitHubRepositoryModel>>
+        get() = _repos
 
     var wasWelcome: Boolean = false
 
@@ -31,6 +37,18 @@ class MainViewModel(
             }
         }
     }
+    fun getRepos(token: String){
+        viewModelScope.launch {
+            try {
+                _repos.value = workWithGitHubUseCase.getRepositories("bearer $token")
+                Log.d("GETUSERDATA", "getUserData: ${_userData.value}")
+            } catch (e: Exception) {
+                Log.d("ER_UserData", "getUserData: error $e")
+            }
+        }
+    }
+
+
 }
 class MainViewModelFactory(
     private val workWithGitHubUseCase: WorkWithGitHubUseCase

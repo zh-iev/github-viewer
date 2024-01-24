@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         val accessToken = tokenManager.accessToken
         accessToken?.let {
             viewModel.getUserData(it)
+            viewModel.getRepos(it)
         }
 
         val navHeaderView = binding.navView.getHeaderView(0)

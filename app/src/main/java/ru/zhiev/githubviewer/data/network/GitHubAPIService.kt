@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.zhiev.githubviewer.Constants
 import ru.zhiev.githubviewer.data.apimodels.GitHubRepositoryApiModel
@@ -65,6 +66,15 @@ interface GitHubAPIService {
     suspend fun createRepository(
         @Header("Authorization") token: String,
         @Body repositoryData: GitHubRepositoryApiModel
+    )
+
+    @Headers("Accept: application/json")
+    @POST("repos/{owner}/{repo}/issues")
+    suspend fun createIssue(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String,
+        @Header("Authorization") token: String,
+        @Body issueData: IssueApiModel
     )
 }
 

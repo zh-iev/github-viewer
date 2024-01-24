@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.zhiev.githubviewer.domain.models.IssueModel
+import ru.zhiev.githubviewer.domain.models.UserModel
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
 import java.lang.Exception
 
@@ -24,6 +25,16 @@ class IssuesViewModel(
                     workWithGitHubUseCase.getIssues("bearer $token")
             } catch (e: Exception) {
                 Log.d("ER_Issues", "getIssues: error $e")
+            }
+        }
+    }
+
+    fun createIssue(token: String, owner: UserModel, issue: IssueModel) {
+        viewModelScope.launch {
+            try {
+                workWithGitHubUseCase.createIssue("bearer $token", owner, issue)
+            } catch (e: Exception) {
+                Log.d("ER_Issues", "createIssue: error $e")
             }
         }
     }

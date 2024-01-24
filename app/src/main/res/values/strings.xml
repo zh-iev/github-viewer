@@ -27,4 +27,6 @@
     <string name="nameRepos">Repository name</string>
     <string name="descriptRepos">Repository description</string>
     <string name="reqSend">The request has been sent</string>
+    <string name="issueTitle">Issue title</string>
+    <string name="issueBody">Issue body</string>
 </resources>

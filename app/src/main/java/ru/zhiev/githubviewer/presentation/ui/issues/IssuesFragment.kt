@@ -16,6 +16,7 @@ import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
 import org.intellij.markdown.html.HtmlGenerator
 import org.intellij.markdown.parser.MarkdownParser
 import ru.zhiev.githubviewer.GitHubViewerApplication
+import ru.zhiev.githubviewer.R
 import ru.zhiev.githubviewer.TokenManager
 import ru.zhiev.githubviewer.databinding.FragmentIssuesBinding
 import ru.zhiev.githubviewer.domain.usecases.WorkWithGitHubUseCase
@@ -58,6 +59,7 @@ class IssuesFragment : Fragment() {
             binding.swipeRefreshIssues.isRefreshing = false
             progressBar.visibility = View.GONE
             issuesAdapter = IssuesAdapter(requireContext(), it) { clickedIssue ->
+                binding.addIssueFAB.visibility = View.GONE
                 binding.progressBar2.visibility = View.VISIBLE
                 val src = clickedIssue.body ?: ""
                 val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(src)
@@ -79,6 +81,7 @@ class IssuesFragment : Fragment() {
                 webView.visibility = View.VISIBLE
 
                 closeButton.setOnClickListener {
+                    binding.addIssueFAB.visibility = View.VISIBLE
                     webView.visibility = View.GONE
                     webView.loadUrl("about:blank")
                     closeButton.visibility = View.GONE
@@ -90,6 +93,15 @@ class IssuesFragment : Fragment() {
 
         binding.swipeRefreshIssues.setOnRefreshListener {
             issuesViewModel.getIssues(token)
+        }
+
+        binding.addIssueFAB.setOnClickListener {
+            val modalWindow = AddIssueModalWindow()
+            val transaction = childFragmentManager.beginTransaction()
+            transaction.add(R.id.issue_modal_window, modalWindow)
+            transaction.addToBackStack(null)
+            transaction.commit()
+            modalWindow.view?.bringToFront()
         }
 
         return root

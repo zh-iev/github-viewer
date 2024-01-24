@@ -27,4 +27,6 @@
     <string name="nameRepos">Название репозитория</string>
     <string name="descriptRepos">Описание репозитория</string>
     <string name="reqSend">Запрос отправлен</string>
+    <string name="issueTitle">Название задачи</string>
+    <string name="issueBody">Содержание задачи</string>
 </resources>
